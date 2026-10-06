@@ -52,6 +52,122 @@
   }
 }
 
+/* ============ TOKENS TAILGRIDS (kit UI) ============
+   Nomes iguais aos do TailGrids (https://github.com/TailGrids/tailgrids, MIT),
+   valores mapeados para a identidade escura/vidro do Call CS (modo híbrido).
+   Para mudar o visual dos componentes em src/components/core, altere aqui. */
+@theme {
+  --color-primary-50: #eef8ff;
+  --color-primary-100: #d9eefe;
+  --color-primary-200: #bce2fe;
+  --color-primary-300: #8ed0fc;
+  --color-primary-400: #59b6f8;
+  --color-primary-500: #3aa7f5;
+  --color-primary-600: #1f86d6;
+  --color-primary-700: #1a6cad;
+
+  --color-title-50: #f2f4f7;
+  --color-text-100: #9aa3ae;
+  --color-text-200: #5f6772;
+
+  --color-base-50: rgb(255 255 255 / 0.05);
+  --color-base-100: rgb(255 255 255 / 0.07);
+  --color-base-200: rgb(255 255 255 / 0.09);
+  --color-base-300: rgb(255 255 255 / 0.1);
+
+  /* Botões */
+  --color-button-primary-background: #f2f4f7;
+  --color-button-primary-hover-background: #ffffff;
+  --color-button-primary-text: #0b0d10;
+  --color-button-primary-focus-ring: rgb(58 167 245 / 0.45);
+
+  --color-button-outline-background: rgb(255 255 255 / 0.06);
+  --color-button-outline-hover-background: rgb(255 255 255 / 0.1);
+  --color-button-outline-border: rgb(255 255 255 / 0.09);
+  --color-button-outline-text: #f2f4f7;
+  --color-button-outline-hover-text: #ffffff;
+  --color-button-outline-focus-ring: rgb(58 167 245 / 0.35);
+  --color-button-outline-disabled-background: rgb(255 255 255 / 0.03);
+  --color-button-outline-disabled-border: rgb(255 255 255 / 0.05);
+  --color-button-outline-disabled-text: #5f6772;
+
+  --color-button-disabled-background: rgb(255 255 255 / 0.05);
+  --color-button-disabled-text: #5f6772;
+
+  --color-button-error-background: #dc2626;
+  --color-button-error-hover-background: #b91c1c;
+  --color-button-error-text: #ffffff;
+  --color-button-error-focus-ring: rgb(220 38 38 / 0.25);
+  --color-button-error-outline-background: rgb(239 68 68 / 0.06);
+  --color-button-error-outline-border: rgb(240 113 103 / 0.25);
+  --color-button-error-outline-hover-background: rgb(239 68 68 / 0.15);
+  --color-button-error-outline-text: #f07167;
+  --color-button-error-outline-hover-text: #f87171;
+  --color-button-error-outline-focus-ring: rgb(220 38 38 / 0.25);
+
+  --color-button-success-background: #16a34a;
+  --color-button-success-hover-background: #15803d;
+  --color-button-success-text: #ffffff;
+  --color-button-success-focus-ring: rgb(22 163 74 / 0.25);
+  --color-button-success-outline-background: rgb(34 197 94 / 0.06);
+  --color-button-success-outline-border: #14532d;
+  --color-button-success-outline-hover-background: rgb(34 197 94 / 0.15);
+  --color-button-success-outline-text: #22c55e;
+  --color-button-success-outline-focus-ring: rgb(22 163 74 / 0.25);
+
+  --color-button-ghost-text: #9aa3ae;
+  --color-button-ghost-hover-text: #f2f4f7;
+  --color-button-ghost-hover-background: rgb(255 255 255 / 0.06);
+
+  /* Badges */
+  --color-badge-neutral-background: rgb(255 255 255 / 0.06);
+  --color-badge-neutral-text: #9aa3ae;
+  --color-badge-neutral-icon-color: #9aa3ae;
+  --color-badge-primary-background: rgb(58 167 245 / 0.14);
+  --color-badge-primary-text: #3aa7f5;
+  --color-badge-primary-icon-color: #59b6f8;
+  --color-badge-error-background: rgb(239 68 68 / 0.15);
+  --color-badge-error-text: #f07167;
+  --color-badge-error-icon-color: #f87171;
+  --color-badge-warning-background: rgb(245 158 11 / 0.15);
+  --color-badge-warning-text: #f2c14e;
+  --color-badge-warning-icon-color: #fbbf24;
+  --color-badge-success-background: rgb(34 197 94 / 0.15);
+  --color-badge-success-text: #22c55e;
+  --color-badge-success-icon-color: #4ade80;
+
+  /* Alertas (usado no "Se der errado") */
+  --color-alert-danger-background: rgb(240 113 103 / 0.08);
+  --color-alert-danger-border: rgb(240 113 103 / 0.22);
+  --color-alert-danger-title: #f07167;
+
+  /* Input */
+  --color-input-background: rgb(255 255 255 / 0.05);
+  --color-input-placeholder-text: #5f6772;
+  --color-input-disabled-text: rgb(255 255 255 / 0.2);
+  --color-input-primary-focus-border: #3aa7f5;
+  --color-input-error-focus-border: #b91c1c;
+  --color-input-success-focus-border: #15803d;
+
+  /* Skeleton */
+  --color-skeleton-gradient-50: rgb(255 255 255 / 0.08);
+
+  /* Superfícies de overlay (sheet / dialog) */
+  --color-background-100: #121519;
+
+  --animate-pulse-custom: tg-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes tg-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+}
+
 /* Utilitários próprios (aceitam variantes, ex.: md:glass-frame) */
 @utility app-backdrop {
   /* Atmosfera escura, sem foto (a referência usa um ambiente desfocado). */

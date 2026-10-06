@@ -30,10 +30,10 @@ export function Section({
 /** "SE DER ERRADO" — curto e sempre visível perto da call. */
 export function FallbackCard({ text }: { text: string }) {
   return (
-    <div className="flex items-start gap-3 rounded-2xl bg-danger/[0.08] px-4 py-3 ring-1 ring-inset ring-danger/20">
-      <CircleAlert className="mt-0.5 size-[18px] shrink-0 text-danger" />
+    <div role="alert" className="flex items-start gap-3 rounded-2xl border border-alert-danger-border bg-alert-danger-background px-4 py-3">
+      <CircleAlert className="mt-0.5 size-[18px] shrink-0 text-alert-danger-title" />
       <p className="text-[15px] leading-snug">
-        <span className="mr-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-danger">Se der errado</span>
+        <span className="mr-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-alert-danger-title">Se der errado</span>
         <span className="text-ink/90">{text}</span>
       </p>
     </div>

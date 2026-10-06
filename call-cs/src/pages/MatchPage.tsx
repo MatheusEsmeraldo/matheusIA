@@ -20,6 +20,7 @@ import { MobileMenu } from '@/components/layout/MobileMenu';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { Overlay } from '@/components/ui/Overlay';
 import { EmptyState, ErrorState, GhostButton } from '@/components/states/States';
+import { Button, buttonStyles } from '@/components/core/button';
 
 type Tab = 'calls' | 'favs';
 
@@ -121,10 +122,7 @@ export function MatchPage() {
         <>
           {prefs.category && <GhostButton onClick={() => update('category', null)}>Todas as jogadas</GhostButton>}
           {prefs.players !== 'ANY' && <GhostButton onClick={() => update('players', 'ANY')}>Qualquer nº de players</GhostButton>}
-          <Link
-            to={`/enciclopedia`}
-            className="inline-flex h-10 items-center rounded-full px-4 text-sm font-semibold text-muted hover:text-ink"
-          >
+          <Link to="/enciclopedia" className={buttonStyles({ variant: 'ghost', size: 'sm' })}>
             Ver Enciclopédia
           </Link>
         </>
@@ -173,15 +171,15 @@ export function MatchPage() {
         <div>
           <header className="sticky top-0 z-30 flex items-center gap-2 bg-bg/80 px-4 pb-3 pt-[max(12px,env(safe-area-inset-top))] backdrop-blur-xl">
             <MobileMenu />
-            <button
-              type="button"
-              onClick={() => setMapSheet(true)}
-              className="surface inline-flex h-11 min-w-0 items-center gap-1.5 rounded-full pl-4 pr-3 text-[15px] font-semibold"
+            <Button
+              appearance="outline"
+              onPress={() => setMapSheet(true)}
+              className="min-w-0 gap-1.5 pl-4 pr-3"
               aria-label={`Mapa: ${map?.name ?? mapId}. Trocar mapa`}
             >
               <span className="truncate capitalize">{map?.name ?? mapId}</span>
-              <ChevronDown className="size-4 shrink-0 text-muted" />
-            </button>
+              <ChevronDown className="text-muted" />
+            </Button>
             <SideToggle id="m-side" value={prefs.side} onChange={(s) => update('side', s)} className="ml-auto w-[112px] shrink-0" />
             <RandomCallButton compact rolling={random.rolling} onClick={() => void random.roll()} />
           </header>

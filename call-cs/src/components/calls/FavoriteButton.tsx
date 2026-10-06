@@ -2,28 +2,22 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import { useFavorites } from '@/hooks/FavoritesProvider';
 import { cn } from '@/lib/cn';
+import { Button } from '@/components/core/button';
 
 /** Estrela de favorito com feedback imediato (otimista). */
 export function FavoriteButton({ callId, size = 'md', className }: { callId: string; size?: 'sm' | 'md'; className?: string }) {
   const { isFavorite, toggle } = useFavorites();
   const fav = isFavorite(callId);
+  const label = fav ? 'Remover das favoritas' : 'Favoritar';
   return (
-    <motion.button
-      type="button"
+    <Button
+      variant="ghost"
+      iconOnly
+      size={size}
       aria-pressed={fav}
-      aria-label={fav ? 'Remover das favoritas' : 'Favoritar'}
-      title={fav ? 'Remover das favoritas' : 'Favoritar'}
-      whileTap={{ scale: 0.85 }}
-      onClick={(e) => {
-        e.stopPropagation();
-        void toggle(callId);
-      }}
-      className={cn(
-        'relative inline-flex shrink-0 items-center justify-center rounded-full transition-colors',
-        size === 'md' ? 'size-11' : 'size-9',
-        fav ? 'text-flash' : 'text-faint hover:bg-white/[0.06] hover:text-ink',
-        className,
-      )}
+      aria-label={label}
+      onPress={() => void toggle(callId)}
+      className={cn(fav && 'text-flash hover:text-flash', className)}
     >
       <AnimatePresence initial={false} mode="popLayout">
         <motion.span
@@ -37,6 +31,6 @@ export function FavoriteButton({ callId, size = 'md', className }: { callId: str
           <Star className={size === 'md' ? 'size-5' : 'size-[18px]'} fill={fav ? 'currentColor' : 'none'} strokeWidth={2} />
         </motion.span>
       </AnimatePresence>
-    </motion.button>
+    </Button>
   );
 }

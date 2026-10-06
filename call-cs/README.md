@@ -76,7 +76,14 @@ ficam no dock inferior, ao alcance do polegar.
 
 ## Stack
 
-React 19 · TypeScript · Vite 6 · Tailwind CSS 4 · Framer Motion 12 · React Router 7 (HashRouter) · lucide-react · fonte Figtree (local, via @fontsource).
+React 19 · TypeScript · Vite 6 · Tailwind CSS 4 · **kit UI TailGrids** (componentes com `class-variance-authority` + `react-aria-components`) · Framer Motion 12 · React Router 7 (HashRouter) · lucide-react · fonte Figtree (local, via @fontsource).
+
+### Kit UI — TailGrids (modo híbrido)
+
+Botões, badges, input, skeleton e os painéis (detalhe, filtros, menu) usam componentes do
+[TailGrids](https://github.com/TailGrids/tailgrids) (MIT) em `src/components/core/`.
+As cores vêm dos **tokens TailGrids** em `src/index.css`, mapeados para o visual escuro/vidro do Call CS.
+Para mudar o visual dos componentes, edite esses tokens. Licença: `THIRD_PARTY_NOTICES.md`.
 
 ## Estrutura
 
@@ -98,7 +105,8 @@ src/
     filters/               SideToggle, EconomyFilter, PlayerFilter, CategoryFilter, MapSelector
     calls/                 CallCard, CallList, CallDetail, TacticalMap, FavoriteButton…
     states/                LoadingState, ErrorState, EmptyState
-    ui/                    SegmentedControl, Overlay, IconButton, Toast, Logo
+    core/                  Componentes TailGrids: Button, Badge, Input, Skeleton
+    ui/                    SegmentedControl, Overlay (Modal react-aria), IconButton, Toast, Logo
   pages/                   HomePage, MatchPage, EncyclopediaPage
 ```
 

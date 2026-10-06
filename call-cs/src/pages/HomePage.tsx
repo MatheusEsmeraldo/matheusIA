@@ -7,6 +7,7 @@ import { MapGrid } from '@/components/filters/MapSelector';
 import { MobileMenu } from '@/components/layout/MobileMenu';
 import { Logo } from '@/components/ui/Logo';
 import { ErrorState } from '@/components/states/States';
+import { Button, buttonStyles } from '@/components/core/button';
 
 /** Entrada: direto ao produto. Escolher mapa → Modo Partida. */
 export function HomePage() {
@@ -42,20 +43,12 @@ export function HomePage() {
         </p>
         <div className="mt-2 flex flex-wrap gap-2">
           {lastMap && (
-            <motion.button
-              whileTap={{ scale: 0.97 }}
-              type="button"
-              onClick={() => navigate(`/partida/${lastMap.id}`)}
-              className="inline-flex h-12 items-center gap-2 rounded-full bg-ink px-5 text-[15px] font-semibold text-[#0b0d10]"
-            >
-              Continuar em {lastMap.name} <ArrowRight className="size-4" />
-            </motion.button>
+            <Button size="lg" onPress={() => navigate(`/partida/${lastMap.id}`)}>
+              Continuar em {lastMap.name} <ArrowRight />
+            </Button>
           )}
-          <Link
-            to="/enciclopedia"
-            className="inline-flex h-12 items-center gap-2 rounded-full bg-white/[0.06] px-5 text-[15px] font-semibold text-ink ring-1 ring-inset ring-white/[0.08] hover:bg-white/[0.1]"
-          >
-            <BookOpen className="size-4" /> Entrar na Enciclopédia
+          <Link to="/enciclopedia" className={buttonStyles({ appearance: 'outline', size: 'lg' })}>
+            <BookOpen /> Entrar na Enciclopédia
           </Link>
         </div>
       </motion.section>

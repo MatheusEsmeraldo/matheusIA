@@ -24,7 +24,10 @@ export function CallList({ state, onOpen, empty, className, maps, showMapName, d
   const mapName = (id: string) => maps?.find((m) => m.id === id)?.name;
 
   return (
-    <div className={cn('grid gap-3 transition-opacity duration-150', state.isRefreshing && 'opacity-60', className)} aria-live="polite">
+    <div
+      className={cn('grid content-start gap-3 transition-opacity duration-150', state.isRefreshing && 'opacity-60', className)}
+      aria-live="polite"
+    >
       {items.map((c, i) => (
         <CallCard key={c.id} call={c} index={i} onOpen={onOpen} density={density} mapName={showMapName ? mapName(c.mapId) : undefined} />
       ))}

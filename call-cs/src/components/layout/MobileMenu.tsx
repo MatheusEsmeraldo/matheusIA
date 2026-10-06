@@ -15,7 +15,7 @@ export function MobileMenu({ className }: { className?: string }) {
 
   return (
     <>
-      <IconButton label="Menu" variant="surface" onClick={() => setOpen(true)} className={className}>
+      <IconButton label="Menu" variant="surface" onPress={() => setOpen(true)} className={className}>
         <Menu className="size-5" />
       </IconButton>
       <Overlay open={open} onClose={() => setOpen(false)} label="Menu">

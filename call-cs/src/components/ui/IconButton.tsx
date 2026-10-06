@@ -1,41 +1,25 @@
-import { motion, type HTMLMotionProps } from 'framer-motion';
-import { forwardRef } from 'react';
-import { cn } from '@/lib/cn';
+import type { ReactNode } from 'react';
+import { Button, type ButtonProps } from '@/components/core/button';
 
-interface Props extends HTMLMotionProps<'button'> {
+interface Props extends Omit<ButtonProps, 'variant' | 'appearance' | 'iconOnly' | 'size' | 'children'> {
   label: string;
   size?: 'sm' | 'md' | 'lg';
+  /** ghost = sem fundo; surface = vidro (outline TailGrids); solid = preenchido. */
   variant?: 'ghost' | 'surface' | 'solid';
+  children: ReactNode;
 }
 
-const SIZE = { sm: 'size-9', md: 'size-11', lg: 'size-12' };
-const VARIANT = {
-  ghost: 'text-muted hover:text-ink hover:bg-white/[0.06]',
-  surface: 'surface text-ink hover:bg-white/[0.09]',
-  solid: 'bg-ink text-[#0b0d10] hover:bg-white',
-};
+const MAP = {
+  ghost: { variant: 'ghost', appearance: 'fill' },
+  surface: { variant: 'primary', appearance: 'outline' },
+  solid: { variant: 'primary', appearance: 'fill' },
+} as const;
 
-/** Botão circular de ícone (alvo de toque ≥ 36px). */
-export const IconButton = forwardRef<HTMLButtonElement, Props>(function IconButton(
-  { label, size = 'md', variant = 'surface', className, children, ...rest },
-  ref,
-) {
+/** Botão circular de ícone — Button TailGrids com `iconOnly`. */
+export function IconButton({ label, size = 'md', variant = 'surface', children, ...rest }: Props) {
   return (
-    <motion.button
-      ref={ref}
-      type="button"
-      aria-label={label}
-      title={label}
-      whileTap={{ scale: 0.92 }}
-      className={cn(
-        'inline-flex shrink-0 items-center justify-center rounded-full transition-colors',
-        SIZE[size],
-        VARIANT[variant],
-        className,
-      )}
-      {...rest}
-    >
+    <Button aria-label={label} iconOnly size={size} {...MAP[variant]} {...rest}>
       {children}
-    </motion.button>
+    </Button>
   );
-});
+}

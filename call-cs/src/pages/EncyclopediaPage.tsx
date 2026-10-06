@@ -15,6 +15,10 @@ import { MobileMenu } from '@/components/layout/MobileMenu';
 import { Overlay } from '@/components/ui/Overlay';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { EmptyState, GhostButton } from '@/components/states/States';
+import { Badge } from '@/components/core/badge';
+import { Button } from '@/components/core/button';
+import { Input } from '@/components/core/input';
+import { IconButton } from '@/components/ui/IconButton';
 
 type All = 'ALL';
 interface LibFilters {
@@ -137,22 +141,28 @@ export function EncyclopediaPage() {
       </header>
 
       <div className="flex flex-col gap-3 md:flex-row md:items-center">
-        <label className="surface flex h-12 flex-1 items-center gap-2 rounded-full px-4 focus-within:ring-2 focus-within:ring-accent/60">
-          <Search className="size-4 text-faint" />
-          <input
+        <div className="relative flex-1">
+          <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-faint" />
+          <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar call, região, tag…"
             disabled={onlyFav}
-            className="h-full min-w-0 flex-1 bg-transparent text-[15px] text-ink placeholder:text-faint focus:outline-none disabled:opacity-40"
             aria-label="Buscar"
+            className="h-12 w-full pl-10 pr-11 text-[15px]"
           />
           {search && (
-            <button type="button" onClick={() => setSearch('')} aria-label="Limpar busca" className="text-faint hover:text-ink">
-              <X className="size-4" />
-            </button>
+            <IconButton
+              label="Limpar busca"
+              variant="ghost"
+              size="sm"
+              onPress={() => setSearch('')}
+              className="absolute right-1.5 top-1/2 -translate-y-1/2"
+            >
+              <X />
+            </IconButton>
           )}
-        </label>
+        </div>
         <div className="flex items-center gap-2">
           <SegmentedControl<'all' | 'fav'>
             ariaLabel="Mostrar"
@@ -165,17 +175,15 @@ export function EncyclopediaPage() {
               { value: 'fav', label: 'Favoritas' },
             ]}
           />
-          <button
-            type="button"
-            onClick={() => setSheet(true)}
-            className="surface inline-flex h-11 items-center gap-2 rounded-full px-4 text-sm font-semibold lg:hidden"
-          >
-            <SlidersHorizontal className="size-4" />
+          <Button appearance="outline" size="sm" onPress={() => setSheet(true)} className="h-11 lg:hidden">
+            <SlidersHorizontal />
             Filtros
             {active > 0 && (
-              <span className="grid size-5 place-items-center rounded-full bg-accent text-[11px] font-bold text-[#0b0d10]">{active}</span>
+              <Badge color="primary" size="sm" className="font-bold">
+                {active}
+              </Badge>
             )}
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -184,9 +192,9 @@ export function EncyclopediaPage() {
           <div className="mb-3 flex items-center justify-between">
             <h2 className="label">Filtros</h2>
             {active > 0 && (
-              <button type="button" onClick={clear} className="text-xs font-semibold text-accent">
+              <Button variant="ghost" size="xs" onPress={clear} className="h-7 px-2.5 text-accent">
                 Limpar ({active})
-              </button>
+              </Button>
             )}
           </div>
           {!sheet && panel}
@@ -225,20 +233,16 @@ export function EncyclopediaPage() {
         <div className="flex items-center justify-between border-b border-line px-5 py-3">
           <h2 className="text-lg font-semibold">Filtros</h2>
           {active > 0 && (
-            <button type="button" onClick={clear} className="text-sm font-semibold text-accent">
+            <Button variant="ghost" size="sm" onPress={clear} className="text-accent">
               Limpar
-            </button>
+            </Button>
           )}
         </div>
         <div className="scroll-thin min-h-0 flex-1 overflow-y-auto p-5">{sheet && panel}</div>
         <div className="border-t border-line p-4 pb-safe">
-          <button
-            type="button"
-            onClick={() => setSheet(false)}
-            className="h-12 w-full rounded-full bg-ink text-[15px] font-semibold text-[#0b0d10]"
-          >
+          <Button size="lg" onPress={() => setSheet(false)} className="w-full">
             Ver {total ?? ''} calls
-          </button>
+          </Button>
         </div>
       </Overlay>
 

@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
 import { Dices, X } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { CATEGORY_LABEL } from '@/config/taxonomy';
 import { useCall } from '@/hooks/useData';
 import type { GameMap } from '@/types/domain';
 import { Overlay } from '@/components/ui/Overlay';
 import { IconButton } from '@/components/ui/IconButton';
+import { Badge } from '@/components/core/badge';
+import { Button } from '@/components/core/button';
 import { ErrorState } from '@/components/states/States';
 import { CopyCallButton } from './CopyCallButton';
 import { FavoriteButton } from './FavoriteButton';
@@ -29,10 +31,22 @@ interface Props {
  * Mobile: tudo em uma coluna, call primeiro.
  */
 export function CallDetail({ callId, onClose, maps, random, onReroll, rerolling }: Props) {
+  // Mantém a última call na tela durante a animação de saída.
+  const last = useRef(callId);
+  if (callId) last.current = callId;
+  const shownId = callId ?? last.current;
   return (
     <Overlay open={!!callId} onClose={onClose} label="Detalhe da call" size="detail">
-      {callId && (
-        <DetailBody key={callId} callId={callId} onClose={onClose} maps={maps} random={random} onReroll={onReroll} rerolling={rerolling} />
+      {shownId && (
+        <DetailBody
+          key={shownId}
+          callId={shownId}
+          onClose={onClose}
+          maps={maps}
+          random={random}
+          onReroll={onReroll}
+          rerolling={rerolling}
+        />
       )}
     </Overlay>
   );
@@ -56,20 +70,14 @@ function DetailBody({ callId, onClose, maps, random, onReroll, rerolling }: Prop
           </>
         )}
         {random && (
-          <span className="inline-flex items-center gap-1 rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-accent">
-            <Dices className="size-3.5" /> Sorteada
-          </span>
+          <Badge color="primary" size="sm" className="font-bold uppercase tracking-[0.12em]">
+            <Dices /> Sorteada
+          </Badge>
         )}
       </div>
       <div className="flex items-center gap-1">
         {random && onReroll && (
-          <motion.button
-            type="button"
-            whileTap={{ scale: 0.95 }}
-            onClick={onReroll}
-            disabled={rerolling}
-            className="inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-[13px] font-semibold text-muted hover:bg-white/[0.06] hover:text-ink disabled:opacity-50"
-          >
+          <Button variant="ghost" size="sm" onPress={onReroll} pending={rerolling}>
             <motion.span
               animate={rerolling ? { rotate: 360 } : { rotate: 0 }}
               transition={rerolling ? { repeat: Infinity, duration: 0.5, ease: 'linear' } : { duration: 0 }}
@@ -78,10 +86,10 @@ function DetailBody({ callId, onClose, maps, random, onReroll, rerolling }: Prop
               <Dices className="size-4" />
             </motion.span>
             Outra
-          </motion.button>
+          </Button>
         )}
         {call && <FavoriteButton callId={call.id} size="sm" />}
-        <IconButton label="Fechar" variant="ghost" size="sm" onClick={onClose}>
+        <IconButton label="Fechar" variant="ghost" size="sm" onPress={onClose}>
           <X className="size-5" />
         </IconButton>
       </div>

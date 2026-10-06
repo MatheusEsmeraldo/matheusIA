@@ -3,20 +3,22 @@ import { RotateCw, SearchX, WifiOff } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { friendlyMessage, type ServiceError } from '@/services';
 import { cn } from '@/lib/cn';
+import { Button } from '@/components/core/button';
+import { Skeleton } from '@/components/core/skeleton';
 
-/** Skeleton discreto com o mesmo formato do CallCard. */
+/** Skeleton (TailGrids) no mesmo formato do CallCard. */
 export function LoadingState({ count = 4, className }: { count?: number; className?: string }) {
   return (
     <div className={cn('grid gap-3', className)} aria-busy="true" aria-label="Carregando calls">
       {Array.from({ length: count }).map((_, i) => (
         <div key={i} className="surface rounded-[var(--radius-card)] p-5">
-          <div className="h-3 w-24 animate-pulse rounded-full bg-white/[0.07]" />
-          <div className="mt-2 h-3.5 w-36 animate-pulse rounded-full bg-white/[0.05]" />
-          <div className="mt-4 h-5 w-full animate-pulse rounded-full bg-white/[0.08]" />
-          <div className="mt-2 h-5 w-3/4 animate-pulse rounded-full bg-white/[0.08]" />
+          <Skeleton className="w-24" />
+          <Skeleton className="mt-2 h-3.5 w-36" />
+          <Skeleton className="mt-4 h-5 w-full" />
+          <Skeleton className="mt-2 h-5 w-3/4" />
           <div className="mt-4 flex gap-1.5">
             {[56, 64, 48].map((w) => (
-              <div key={w} className="h-6 animate-pulse rounded-full bg-white/[0.05]" style={{ width: w }} />
+              <Skeleton key={w} className="h-6" style={{ width: w }} />
             ))}
           </div>
         </div>
@@ -60,13 +62,9 @@ export function ErrorState({ error, onRetry, className }: { error: ServiceError 
       title="Não deu para carregar"
       text={error ? friendlyMessage(error) : undefined}
       action={
-        <button
-          type="button"
-          onClick={onRetry}
-          className="inline-flex h-11 items-center gap-2 rounded-full bg-ink px-5 text-sm font-semibold text-[#0b0d10]"
-        >
-          <RotateCw className="size-4" /> Tentar novamente
-        </button>
+        <Button onPress={onRetry}>
+          <RotateCw /> Tentar novamente
+        </Button>
       }
     />
   );
@@ -86,14 +84,11 @@ export function EmptyState({
   return <StateBox className={className} icon={<SearchX className="size-5" />} title={title} text={text} action={actions} />;
 }
 
+/** Ação secundária (Button TailGrids outline). */
 export function GhostButton({ children, onClick }: { children: ReactNode; onClick: () => void }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="inline-flex h-10 items-center rounded-full bg-white/[0.06] px-4 text-sm font-semibold text-ink ring-1 ring-inset ring-white/[0.08] hover:bg-white/[0.1]"
-    >
+    <Button appearance="outline" size="sm" onPress={onClick}>
       {children}
-    </button>
+    </Button>
   );
 }

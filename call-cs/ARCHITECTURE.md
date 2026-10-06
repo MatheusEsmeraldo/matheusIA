@@ -38,6 +38,14 @@ Toda lista/detalhe passa por `useAsync` e renderiza:
 - **Empty** → `EmptyState` com sugestões de filtro (ex.: "Qualquer nº de players").
 - **Success** → `CallList`.
 
+## Kit UI (TailGrids, modo híbrido)
+
+- `src/components/core/` — `Button`, `Badge`, `Input`, `Skeleton` adaptados do TailGrids (MIT). API original: `cva` + `react-aria-components` (botões usam `onPress`).
+- `src/index.css` › bloco **TOKENS TAILGRIDS** — mesmos nomes de token do kit (`--color-button-primary-background`, `--color-badge-*`, `--color-input-*`…), com valores do visual Call CS.
+- `Overlay` segue o padrão Sheet/Modal do TailGrids (`ModalOverlay` + `Modal` + `Dialog`): foco preso, Esc/clique fora fecham, scroll travado.
+- `cn()` = `clsx` + `tailwind-merge` (padrão TailGrids).
+- Controles muito específicos do produto (segmentado TR/CT, economia, chips, abas de mapa, card de call) continuam próprios, usando os mesmos tokens.
+
 ## Componentes principais
 
 | Componente | Onde | Nota |

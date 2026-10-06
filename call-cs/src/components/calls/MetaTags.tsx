@@ -1,6 +1,7 @@
 import { CATEGORY_LABEL, DIFFICULTY_LABEL, ECONOMY_LABEL, SITE_LABEL, playersLabel } from '@/config/taxonomy';
 import { cn } from '@/lib/cn';
 import type { CallSummary } from '@/types/domain';
+import { Badge } from '@/components/core/badge';
 
 export function SideBadge({ side, className }: { side: CallSummary['side']; className?: string }) {
   return (
@@ -37,8 +38,8 @@ export function MetaTags({
   return (
     <ul className={cn('flex flex-wrap items-center gap-1.5', className)}>
       {show.map((k) => (
-        <li key={k} className="rounded-full bg-white/[0.05] px-2.5 py-1 text-xs font-medium text-muted">
-          {parts[k]}
+        <li key={k}>
+          <Badge>{parts[k]}</Badge>
         </li>
       ))}
     </ul>
