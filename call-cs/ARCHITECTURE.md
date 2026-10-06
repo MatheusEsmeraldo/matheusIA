@@ -56,7 +56,7 @@ Toda lista/detalhe passa por `useAsync` e renderiza:
 | `MapGrid`, `MapTabs` | filters | Mapas vêm de `services.maps.getMaps()` — pool não é fixo no código. |
 | `CallCard` / `CallList` | calls | Call em destaque; metadados discretos; favoritar/copiar. |
 | `CallDetail` | calls | Overlay: call + "se der errado" + objetivo + players + execução \| utilitárias + mapa. |
-| `TacticalMap` | calls | SVG esquemático (coordenadas 0–100). Recebe radar real depois via `GameMap.image`. |
+| `TacticalMap` | calls | Radar vetorial na identidade Call CS (`GameMap.radar`) + bombs, regiões, players, caminhos e granadas — tudo em coordenadas 0–100. Sem radar, usa só o layout esquemático. |
 | `RandomCallButton` + `useRandomCall` | calls/hooks | "Me dá uma call" (sorteio ≥450 ms de microinteração). |
 | `FavoriteButton` + `FavoritesProvider` | calls/hooks | Otimista com rollback. |
 

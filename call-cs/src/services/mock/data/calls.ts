@@ -40,42 +40,43 @@ const CURATED = { type: 'CURATED' as const, name: 'Call CS (mock)' };
 
 // ---------- pontos esquemáticos de Mirage ----------
 const M = {
-  tSpawn: pt(88, 52),
-  ramp: pt(66, 76),
-  palace: pt(60, 90),
-  aSite: pt(34, 80),
-  ct: pt(20, 66),
-  jungle: pt(38, 62),
-  stairs: pt(48, 71),
-  sandwich: pt(44, 83),
-  mid: pt(66, 44),
-  window: pt(34, 44),
-  connector: pt(44, 54),
-  short: pt(29, 34),
-  apps: pt(52, 18),
-  bSite: pt(18, 22),
-  bench: pt(22, 16),
-  market: pt(14, 40),
+  tSpawn: pt(88, 40),
+  ramp: pt(70, 66),
+  palace: pt(76, 77),
+  aSite: pt(55, 78),
+  ct: pt(29, 71),
+  jungle: pt(39, 61),
+  stairs: pt(50, 66),
+  sandwich: pt(53, 71),
+  mid: pt(66, 45),
+  window: pt(41, 42),
+  connector: pt(46, 54),
+  short: pt(32, 44),
+  apps: pt(50, 22),
+  appsEntry: pt(64, 19),
+  bSite: pt(22, 28),
+  bench: pt(17, 26),
+  market: pt(18, 43),
 };
 
 // Utilitárias reutilizadas
 const smokeCT = (p: PlayerCount) =>
-  util('mirage-smoke-ct', 'Smoke CT', 'SMOKE', 'Base TR / Rampa', 'Entrada CT do bomb A', p, pt(24, 72), 'JUMP_THROW');
+  util('mirage-smoke-ct', 'Smoke CT', 'SMOKE', 'Base TR / Rampa', 'Entrada CT do bomb A', p, pt(40, 76), 'JUMP_THROW');
 const smokeJungle = (p: PlayerCount) =>
-  util('mirage-smoke-jungle', 'Smoke Jungle', 'SMOKE', 'Topo do meio', 'Jungle / conector', p, pt(37, 63));
-const smokeStairs = (p: PlayerCount) => util('mirage-smoke-stairs', 'Smoke Escada', 'SMOKE', 'Rampa', 'Escada do bomb A', p, pt(47, 72));
-const flashA = (p: PlayerCount) => util('mirage-flash-a', 'Flash A', 'FLASH', 'Rampa', 'Por cima do bomb A', p, pt(38, 76), 'RIGHT_CLICK');
+  util('mirage-smoke-jungle', 'Smoke Jungle', 'SMOKE', 'Topo do meio', 'Jungle / conector', p, pt(40, 62));
+const smokeStairs = (p: PlayerCount) => util('mirage-smoke-stairs', 'Smoke Escada', 'SMOKE', 'Rampa', 'Escada do bomb A', p, pt(49, 66));
+const flashA = (p: PlayerCount) => util('mirage-flash-a', 'Flash A', 'FLASH', 'Rampa', 'Por cima do bomb A', p, pt(57, 74), 'RIGHT_CLICK');
 const mollySandwich = (p: PlayerCount) =>
-  util('mirage-molly-sandwich', 'Molotov Sanduba', 'MOLOTOV', 'Rampa', 'Canto do sanduba', p, pt(44, 83));
+  util('mirage-molly-sandwich', 'Molotov Sanduba', 'MOLOTOV', 'Rampa', 'Canto do sanduba', p, pt(53, 71));
 const smokeWindow = (p: PlayerCount) =>
-  util('mirage-smoke-window', 'Smoke Janela', 'SMOKE', 'Base TR', 'Janela do meio', p, pt(34, 44), 'JUMP_THROW');
-const smokeShort = (p: PlayerCount) => util('mirage-smoke-short', 'Smoke Curto', 'SMOKE', 'Apê', 'Saída do curto', p, pt(29, 35));
+  util('mirage-smoke-window', 'Smoke Janela', 'SMOKE', 'Base TR', 'Janela do meio', p, pt(41, 42), 'JUMP_THROW');
+const smokeShort = (p: PlayerCount) => util('mirage-smoke-short', 'Smoke Curto', 'SMOKE', 'Apê', 'Saída do curto', p, pt(32, 44));
 const mollyBench = (p: PlayerCount) =>
-  util('mirage-molly-bench', 'Molotov Base B', 'MOLOTOV', 'Apê', 'Banco / base do bomb B', p, pt(21, 16));
+  util('mirage-molly-bench', 'Molotov Base B', 'MOLOTOV', 'Apê', 'Banco / base do bomb B', p, pt(17, 26));
 const flashB = (p: PlayerCount) =>
-  util('mirage-flash-b', 'Flash B', 'FLASH', 'Saída do apê', 'Por cima do bomb B', p, pt(26, 22), 'RIGHT_CLICK');
-const smokeRampCT = (p: PlayerCount) => util('mirage-ct-smoke-ramp', 'Smoke Rampa', 'SMOKE', 'Bomb A', 'Topo da rampa', p, pt(60, 76));
-const mollyApps = (p: PlayerCount) => util('mirage-ct-molly-apps', 'Molotov Apê', 'MOLOTOV', 'Bomb B', 'Saída do apê', p, pt(40, 18));
+  util('mirage-flash-b', 'Flash B', 'FLASH', 'Saída do apê', 'Por cima do bomb B', p, pt(25, 30), 'RIGHT_CLICK');
+const smokeRampCT = (p: PlayerCount) => util('mirage-ct-smoke-ramp', 'Smoke Rampa', 'SMOKE', 'Bomb A', 'Topo da rampa', p, pt(66, 68));
+const mollyApps = (p: PlayerCount) => util('mirage-ct-molly-apps', 'Molotov Apê', 'MOLOTOV', 'Bomb B', 'Saída do apê', p, pt(35, 23));
 
 export const mockCalls: Call[] = [
   // ===================== MIRAGE — TR =====================
@@ -112,17 +113,17 @@ export const mockCalls: Call[] = [
     updatedAt: '2026-09-20T12:00:00Z',
     mapPlan: {
       markers: [
-        player(1, pt(70, 78)),
-        player(2, pt(66, 82)),
-        player(3, M.palace),
-        player(4, pt(62, 42)),
-        player(5, pt(68, 48)),
+        player(1, pt(72, 64)),
+        player(2, pt(69, 67)),
+        player(3, pt(77, 76)),
+        player(4, pt(64, 44)),
+        player(5, pt(68, 47)),
         target('A', M.aSite),
       ],
       paths: [
-        path(1, pt(70, 78), M.stairs, M.aSite),
-        path(3, M.palace, M.sandwich, M.aSite),
-        path(5, pt(68, 48), M.connector, M.jungle, pt(36, 74)),
+        path(1, pt(72, 64), pt(62, 72), M.aSite),
+        path(3, pt(77, 76), pt(64, 79), M.aSite),
+        path(5, pt(68, 47), M.connector, M.jungle, pt(49, 74)),
       ],
     },
   },
@@ -159,14 +160,14 @@ export const mockCalls: Call[] = [
     updatedAt: '2026-09-18T12:00:00Z',
     mapPlan: {
       markers: [
-        player(1, pt(70, 74)),
-        player(2, pt(72, 78)),
-        player(3, pt(68, 80)),
-        player(4, pt(74, 82)),
-        player(5, pt(66, 70)),
+        player(1, pt(72, 63)),
+        player(2, pt(74, 65)),
+        player(3, pt(70, 67)),
+        player(4, pt(73, 68)),
+        player(5, pt(68, 64)),
         target('A', M.aSite),
       ],
-      paths: [path(null, pt(70, 76), M.stairs, M.aSite)],
+      paths: [path(null, M.ramp, pt(62, 72), M.aSite)],
     },
   },
   {
@@ -202,14 +203,14 @@ export const mockCalls: Call[] = [
     updatedAt: '2026-09-17T12:00:00Z',
     mapPlan: {
       markers: [
-        player(1, pt(48, 16)),
-        player(2, pt(54, 20)),
-        player(3, pt(56, 14)),
-        player(4, pt(50, 22)),
+        player(1, pt(46, 21)),
+        player(2, pt(52, 23)),
+        player(3, pt(56, 20)),
+        player(4, pt(49, 24)),
         player(5, pt(64, 46)),
         target('B', M.bSite),
       ],
-      paths: [path(1, pt(48, 16), pt(32, 20), M.bSite), path(5, pt(64, 46), M.window)],
+      paths: [path(1, pt(46, 21), pt(31, 24), M.bSite), path(5, pt(64, 46), M.window)],
     },
   },
   {
@@ -244,8 +245,8 @@ export const mockCalls: Call[] = [
     source: CURATED,
     updatedAt: '2026-09-15T12:00:00Z',
     mapPlan: {
-      markers: [player(1, pt(52, 18)), target('B', M.bSite)],
-      paths: [path(null, M.tSpawn, pt(70, 26), M.apps, M.bSite)],
+      markers: [player(1, M.apps), target('B', M.bSite)],
+      paths: [path(null, M.tSpawn, pt(86, 22), M.appsEntry, M.apps, pt(31, 24), M.bSite)],
     },
   },
   {
@@ -281,14 +282,14 @@ export const mockCalls: Call[] = [
     updatedAt: '2026-09-14T12:00:00Z',
     mapPlan: {
       markers: [
-        player(1, pt(68, 76)),
-        player(2, pt(64, 80)),
-        player(3, pt(50, 16)),
-        player(4, pt(54, 20)),
-        player(5, pt(56, 14)),
+        player(1, pt(71, 65)),
+        player(2, pt(68, 68)),
+        player(3, pt(47, 21)),
+        player(4, pt(52, 23)),
+        player(5, pt(56, 20)),
         target('B', M.bSite),
       ],
-      paths: [path(3, pt(50, 16), M.bSite)],
+      paths: [path(3, pt(47, 21), pt(31, 24), M.bSite)],
     },
   },
   {
@@ -318,7 +319,7 @@ export const mockCalls: Call[] = [
     source: CURATED,
     updatedAt: '2026-09-12T12:00:00Z',
     mapPlan: {
-      markers: [player(1, M.ramp), player(2, M.palace), player(3, pt(64, 42)), player(4, pt(60, 50)), player(5, M.apps)],
+      markers: [player(1, M.ramp), player(2, M.palace), player(3, pt(64, 43)), player(4, pt(60, 49)), player(5, M.apps)],
       paths: [],
     },
   },
@@ -348,7 +349,7 @@ export const mockCalls: Call[] = [
     tags: ['pistol', 'rápida'],
     source: CURATED,
     updatedAt: '2026-09-10T12:00:00Z',
-    mapPlan: { markers: [target('A', M.aSite)], paths: [path(null, M.tSpawn, M.ramp, M.aSite)] },
+    mapPlan: { markers: [target('A', M.aSite)], paths: [path(null, M.tSpawn, pt(86, 60), M.ramp, pt(62, 72), M.aSite)] },
   },
   {
     id: 'mirage-tr-contact-b-08',
@@ -375,8 +376,8 @@ export const mockCalls: Call[] = [
     source: CURATED,
     updatedAt: '2026-09-08T12:00:00Z',
     mapPlan: {
-      markers: [player(1, pt(48, 18)), player(2, pt(52, 16)), player(3, pt(56, 18)), target('B', M.bSite)],
-      paths: [path(1, pt(48, 18), M.bSite)],
+      markers: [player(1, pt(46, 21)), player(2, pt(50, 23)), player(3, pt(54, 21)), target('B', M.bSite)],
+      paths: [path(1, pt(46, 21), pt(31, 24), M.bSite)],
     },
   },
   {
@@ -399,7 +400,7 @@ export const mockCalls: Call[] = [
     tags: ['eco', 'dupla'],
     source: CURATED,
     updatedAt: '2026-09-06T12:00:00Z',
-    mapPlan: { markers: [player(1, pt(58, 90)), player(2, pt(62, 92))], paths: [path(1, M.palace, M.aSite)] },
+    mapPlan: { markers: [player(1, pt(75, 77)), player(2, pt(78, 78))], paths: [path(1, M.palace, pt(64, 79), M.aSite)] },
   },
   // ===================== MIRAGE — CT =====================
   {
@@ -442,7 +443,7 @@ export const mockCalls: Call[] = [
     objective: 'Recuperar o bomb A em grupo, sem pingar um de cada vez.',
     execution: ['Agrupa os três antes de entrar.', 'Smoke rampa para cortar ajuda.', 'Flash por cima e entra todo mundo junto.'],
     playerRoles: [role(1, 'CT', 'Smoke rampa.'), role(2, 'CT', 'Flash por cima.'), role(3, 'Jungle', 'Entra junto pelo jungle.')],
-    utilities: [smokeRampCT(1), util('mirage-ct-flash-a', 'Flash A', 'FLASH', 'CT', 'Por cima do bomb A', 2, pt(30, 76), 'RIGHT_CLICK')],
+    utilities: [smokeRampCT(1), util('mirage-ct-flash-a', 'Flash A', 'FLASH', 'CT', 'Por cima do bomb A', 2, pt(48, 79), 'RIGHT_CLICK')],
     fallback: 'Se não der tempo de agrupar, salva a arma.',
     difficulty: 'MEDIUM',
     site: 'A',
@@ -451,8 +452,8 @@ export const mockCalls: Call[] = [
     source: CURATED,
     updatedAt: '2026-09-16T12:00:00Z',
     mapPlan: {
-      markers: [player(1, M.ct), player(2, pt(22, 70)), player(3, M.jungle), target('A', M.aSite)],
-      paths: [path(1, M.ct, M.aSite), path(3, M.jungle, M.aSite)],
+      markers: [player(1, M.ct), player(2, pt(31, 75)), player(3, M.jungle), target('A', M.aSite)],
+      paths: [path(1, M.ct, pt(42, 78), M.aSite), path(3, M.jungle, pt(48, 70), M.aSite)],
     },
   },
   {
@@ -510,7 +511,7 @@ export const mockCalls: Call[] = [
     source: CURATED,
     updatedAt: '2026-09-09T12:00:00Z',
     mapPlan: {
-      markers: [player(1, pt(30, 80)), player(2, pt(36, 86)), player(3, M.jungle), player(4, M.ct), player(5, M.bSite)],
+      markers: [player(1, pt(52, 80)), player(2, pt(58, 82)), player(3, M.jungle), player(4, M.ct), player(5, M.bSite)],
       paths: [],
     },
   },
@@ -541,7 +542,7 @@ export const mockCalls: Call[] = [
     source: CURATED,
     updatedAt: '2026-09-07T12:00:00Z',
     mapPlan: {
-      markers: [player(1, M.bSite), player(2, M.bench), player(3, M.window), player(4, M.aSite), player(5, pt(40, 86))],
+      markers: [player(1, M.bSite), player(2, M.bench), player(3, M.window), player(4, M.aSite), player(5, pt(60, 80))],
       paths: [],
     },
   },
@@ -565,9 +566,9 @@ export const mockCalls: Call[] = [
       role(5, 'Banana', 'Flash e planta.'),
     ],
     utilities: [
-      util('inferno-smoke-ct', 'Smoke CT', 'SMOKE', 'Banana', 'Entrada CT do B', 2, { x: 46, y: 14 }),
-      util('inferno-smoke-coffins', 'Smoke Coffins', 'SMOKE', 'Banana', 'Coffins', 3, { x: 30, y: 10 }),
-      util('inferno-molly-corner', 'Molotov Canto', 'MOLOTOV', 'Banana', 'Canto do B', 4, { x: 26, y: 20 }),
+      util('inferno-smoke-ct', 'Smoke CT', 'SMOKE', 'Banana', 'Entrada CT do B', 2, { x: 58, y: 20 }),
+      util('inferno-smoke-coffins', 'Smoke Coffins', 'SMOKE', 'Banana', 'Coffins', 3, { x: 53, y: 12 }),
+      util('inferno-molly-corner', 'Molotov Canto', 'MOLOTOV', 'Banana', 'Canto do B', 4, { x: 44, y: 20 }),
     ],
     fallback: 'Se perder a banana, vira A pelo meio com 3.',
     difficulty: 'MEDIUM',
@@ -577,8 +578,8 @@ export const mockCalls: Call[] = [
     source: CURATED,
     updatedAt: '2026-09-13T12:00:00Z',
     mapPlan: {
-      markers: [player(1, { x: 34, y: 44 }), { id: 'target-B', kind: 'TARGET', label: 'B', x: 34, y: 16 }],
-      paths: [path(null, { x: 22, y: 86 }, { x: 34, y: 50 }, { x: 34, y: 18 })],
+      markers: [player(1, { x: 44, y: 46 }), { id: 'target-B', kind: 'TARGET', label: 'B', x: 47, y: 22 }],
+      paths: [path(null, { x: 10, y: 68 }, { x: 30, y: 64 }, { x: 42, y: 52 }, { x: 50, y: 38 }, { x: 47, y: 25 })],
     },
   },
   {
@@ -599,7 +600,7 @@ export const mockCalls: Call[] = [
       role(4, 'Bomb A', 'Segura apê.'),
       role(5, 'Pit', 'Segura pit.'),
     ],
-    utilities: [util('inferno-ct-molly-banana', 'Molotov Banana', 'MOLOTOV', 'Bomb B', 'Meio da banana', 1, { x: 34, y: 44 })],
+    utilities: [util('inferno-ct-molly-banana', 'Molotov Banana', 'MOLOTOV', 'Bomb B', 'Meio da banana', 1, { x: 44, y: 46 })],
     fallback: 'Se a banana cair, os 2 recuam pro B e esperam retake.',
     difficulty: 'EASY',
     site: 'ANY',
@@ -628,7 +629,7 @@ export const mockCalls: Call[] = [
       role(4, 'Túnel', 'Olha as portas.'),
       role(5, 'Túnel', 'Planta.'),
     ],
-    utilities: [util('dust2-flash-b', 'Flash B', 'FLASH', 'Túnel', 'Por cima do B', 2, { x: 20, y: 24 }, 'RIGHT_CLICK')],
+    utilities: [util('dust2-flash-b', 'Flash B', 'FLASH', 'Túnel', 'Por cima do B', 2, { x: 20, y: 16 }, 'RIGHT_CLICK')],
     fallback: 'Se morrer 2 na saída, salva.',
     difficulty: 'EASY',
     site: 'B',
@@ -637,8 +638,8 @@ export const mockCalls: Call[] = [
     source: CURATED,
     updatedAt: '2026-09-04T12:00:00Z',
     mapPlan: {
-      markers: [{ id: 'target-B', kind: 'TARGET', label: 'B', x: 18, y: 18 }],
-      paths: [path(null, { x: 48, y: 88 }, { x: 22, y: 56 }, { x: 18, y: 22 })],
+      markers: [{ id: 'target-B', kind: 'TARGET', label: 'B', x: 20, y: 13 }],
+      paths: [path(null, { x: 38, y: 90 }, { x: 20, y: 62 }, { x: 10, y: 45 }, { x: 10, y: 28 }, { x: 18, y: 16 })],
     },
   },
   {
@@ -660,8 +661,8 @@ export const mockCalls: Call[] = [
       role(5, 'Short', 'Entra e planta.'),
     ],
     utilities: [
-      util('dust2-smoke-ct', 'Smoke CT', 'SMOKE', 'Long', 'Entrada CT', 2, { x: 64, y: 18 }),
-      util('dust2-smoke-cross', 'Smoke Cruz', 'SMOKE', 'Long', 'Cruz do long', 3, { x: 80, y: 34 }),
+      util('dust2-smoke-ct', 'Smoke CT', 'SMOKE', 'Long', 'Entrada CT', 2, { x: 71, y: 20 }),
+      util('dust2-smoke-cross', 'Smoke Cruz', 'SMOKE', 'Long', 'Cruz do long', 3, { x: 88, y: 28 }),
     ],
     fallback: 'Se o long cair, todos vão pro short.',
     difficulty: 'MEDIUM',

@@ -69,11 +69,17 @@ Os rótulos em português ficam no frontend (`src/config/taxonomy.ts`). A API s�
 | `image` | string \| null | ✔ | URL do radar/imagem. `null` hoje. |
 | `active` | boolean | ✔ | Está no pool ativo? O frontend mostra só ativos na seleção rápida. |
 | `order` | number | ✔ | Ordem de exibição (crescente). |
-| `layout` | `MapLayout` \| null | ✔ | Pontos esquemáticos para o mapa tático. |
+| `layout` | `MapLayout` \| null | ✔ | Bombsites e regiões (callouts) no mapa tático. |
+| `radar` | `MapRadar` \| null | ✔ | Radar vetorial (áreas jogáveis) desenhado na identidade Call CS. `null` = sem radar. |
 
 `MapLayout` = `{ "sites": { "A"?: MapPoint, "B"?: MapPoint }, "zones": MapZone[] }`
 `MapPoint` = `{ "x": number, "y": number }` — **coordenadas normalizadas 0–100** (x da esquerda p/ direita, y de cima p/ baixo).
 `MapZone` = `MapPoint & { "id": string, "label": string }`.
+
+`MapRadar` = `{ "layers": MapRadarLayer[] }` e `MapRadarLayer` = `{ "id": string, "label": string, "path": string }`.
+`path` é um **SVG path** no mesmo sistema 0–100 (desenhado com `fill-rule: evenodd`). A primeira camada é a principal;
+as demais (ex.: andar inferior da Nuke) aparecem por baixo, tracejadas. Os 7 radares atuais estão em
+`src/services/mock/data/radars.ts` — servem de seed. Guardar como texto/JSONB (≈3–6 KB por mapa).
 
 > O pool de mapas muda com o tempo: **nada é fixo no frontend**. Basta o backend devolver a lista.
 
@@ -214,10 +220,15 @@ Comportamento esperado:
       "active": true,
       "order": 1,
       "layout": {
-        "sites": { "A": { "x": 34, "y": 80 }, "B": { "x": 18, "y": 22 } },
+        "sites": { "A": { "x": 55, "y": 78 }, "B": { "x": 22, "y": 28 } },
         "zones": [
-          { "id": "ramp", "label": "Rampa", "x": 66, "y": 76 },
-          { "id": "palace", "label": "Palácio", "x": 60, "y": 92 }
+          { "id": "ramp", "label": "Rampa", "x": 70, "y": 66 },
+          { "id": "palace", "label": "Palácio", "x": 76, "y": 77 }
+        ]
+      },
+      "radar": {
+        "layers": [
+          { "id": "main", "label": "Principal", "path": "M10.3 22.2 L15.1 22.2 L16.4 16.8 ... Z" }
         ]
       }
     }
@@ -398,6 +409,7 @@ Se o corpo não tiver `error.code`, o cliente deduz pelo status HTTP.
 | Hoje (mock) | Arquivo | Substituir por |
 | --- | --- | --- |
 | Lista de mapas | `src/services/mock/data/maps.ts` | `GET /maps` |
+| Radares vetoriais dos 7 mapas | `src/services/mock/data/radars.ts` | campo `radar` de `GET /maps` |
 | 18 calls (14 Mirage, 2 Inferno, 2 Dust2) | `src/services/mock/data/calls.ts` | `GET /calls*` |
 | Filtro/ordenação/sorteio em memória | `src/services/mock/mockCallService.ts` | Queries no banco |
 | Mapas em memória | `src/services/mock/mockMapService.ts` | `/maps` |
@@ -436,7 +448,7 @@ A troca acontece em **um único arquivo**: `src/services/index.ts`.
 ## 8. Sugestão de modelo de dados (não obrigatório)
 
 ```
-maps(id PK, name, slug UNIQUE, image, active, "order", layout JSONB)
+maps(id PK, name, slug UNIQUE, image, active, "order", layout JSONB, radar JSONB)
 calls(id PK, map_id FK, side, economy, category, players_required, title, short_call,
       objective, execution JSONB, player_roles JSONB, fallback, difficulty, site,
       regions TEXT[], tags TEXT[], source_type, source_name, map_plan JSONB,

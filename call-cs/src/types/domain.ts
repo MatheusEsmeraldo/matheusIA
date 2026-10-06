@@ -53,6 +53,20 @@ export interface MapLayout {
   zones: MapZone[];
 }
 
+/** Camada do radar vetorial (ex.: andar superior/inferior da Nuke). */
+export interface MapRadarLayer {
+  id: string;
+  label: string;
+  /** SVG path (viewBox 0 0 100 100, fill-rule evenodd) das áreas jogáveis. */
+  path: string;
+}
+
+/** Radar vetorial do mapa, desenhado na identidade Call CS. */
+export interface MapRadar {
+  /** A primeira camada é a principal; as demais são desenhadas por baixo, tracejadas. */
+  layers: MapRadarLayer[];
+}
+
 export interface GameMap {
   id: string;
   name: string;
@@ -64,6 +78,8 @@ export interface GameMap {
   /** Ordem de exibição. */
   order: number;
   layout: MapLayout | null;
+  /** Radar vetorial. `null` = usa só o layout esquemático. */
+  radar: MapRadar | null;
 }
 
 export interface Utility {

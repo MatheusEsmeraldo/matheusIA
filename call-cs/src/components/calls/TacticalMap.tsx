@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
+import { useId } from 'react';
 import { cn } from '@/lib/cn';
 import type { Call, GameMap, MapPoint, Utility } from '@/types/domain';
 
 /**
- * Mapa tático ESQUEMÁTICO (placeholder). Não é o radar oficial.
- * Quando o backend fornecer `GameMap.image` (radar), ele entra como fundo
- * e as mesmas coordenadas 0–100 continuam valendo para marcadores e caminhos.
+ * Mapa tático com RADAR VETORIAL na identidade Call CS (GameMap.radar).
+ * Coordenadas 0–100 compartilhadas por radar, bombsites, regiões, marcadores e caminhos.
+ * Sem radar cadastrado, cai para o layout esquemático (só bombs e regiões).
  */
 
 const UTIL_COLOR: Record<Utility['type'], string> = {
@@ -32,8 +33,44 @@ function Grid() {
   );
 }
 
+/** Áreas jogáveis do mapa. Camadas extras (ex.: andar inferior) ficam por baixo, tracejadas. */
+function Radar({ map, uid }: { map: GameMap; uid: string }) {
+  if (!map.radar || map.radar.layers.length === 0) return null;
+  const [main, ...others] = map.radar.layers;
+  return (
+    <g>
+      <defs>
+        <linearGradient id={`${uid}-floor`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="rgb(255 255 255 / 0.11)" />
+          <stop offset="1" stopColor="rgb(255 255 255 / 0.05)" />
+        </linearGradient>
+      </defs>
+      {others.map((l) => (
+        <path
+          key={l.id}
+          d={l.path}
+          fillRule="evenodd"
+          fill="rgb(58 167 245 / 0.05)"
+          stroke="rgb(58 167 245 / 0.45)"
+          strokeWidth="0.22"
+          strokeDasharray="0.9 0.7"
+        />
+      ))}
+      <path
+        d={main.path}
+        fillRule="evenodd"
+        fill={`url(#${uid}-floor)`}
+        stroke="rgb(255 255 255 / 0.26)"
+        strokeWidth="0.22"
+        strokeLinejoin="round"
+      />
+    </g>
+  );
+}
+
 function Sites({ map, target }: { map: GameMap; target?: string }) {
   if (!map.layout) return null;
+  const r = map.radar ? 6 : 9;
   return (
     <>
       {(Object.entries(map.layout.sites) as [string, MapPoint][]).map(([key, p]) => {
@@ -41,11 +78,11 @@ function Sites({ map, target }: { map: GameMap; target?: string }) {
         return (
           <g key={key}>
             <rect
-              x={p.x - 9}
-              y={p.y - 9}
-              width="18"
-              height="18"
-              rx="4"
+              x={p.x - r}
+              y={p.y - r}
+              width={r * 2}
+              height={r * 2}
+              rx="3"
               fill={hot ? 'rgb(58 167 245 / 0.16)' : 'rgb(255 255 255 / 0.05)'}
               stroke={hot ? 'var(--color-accent)' : 'rgb(255 255 255 / 0.14)'}
               strokeWidth={hot ? 0.6 : 0.35}
@@ -53,11 +90,11 @@ function Sites({ map, target }: { map: GameMap; target?: string }) {
             />
             <text
               x={p.x}
-              y={p.y + 2.6}
+              y={p.y + r * 0.3}
               textAnchor="middle"
-              fontSize="7.5"
+              fontSize={r * 0.85}
               fontWeight="700"
-              fill={hot ? 'var(--color-accent)' : 'rgb(255 255 255 / 0.22)'}
+              fill={hot ? 'var(--color-accent)' : 'rgb(255 255 255 / 0.35)'}
             >
               {key}
             </text>
@@ -75,7 +112,17 @@ function Zones({ map }: { map: GameMap }) {
       {map.layout.zones.map((z) => (
         <g key={z.id}>
           <circle cx={z.x} cy={z.y} r="0.7" fill="rgb(255 255 255 / 0.3)" />
-          <text x={z.x} y={z.y - 1.8} textAnchor="middle" fontSize="2.6" fontWeight="500" fill="rgb(255 255 255 / 0.42)">
+          <text
+            x={z.x}
+            y={z.y - 1.8}
+            textAnchor="middle"
+            fontSize="2.6"
+            fontWeight="600"
+            fill="rgb(255 255 255 / 0.6)"
+            stroke="#121519"
+            strokeWidth="0.8"
+            paintOrder="stroke"
+          >
             {z.label}
           </text>
         </g>
@@ -86,12 +133,15 @@ function Zones({ map }: { map: GameMap }) {
 
 /** Miniatura usada nos cards de mapa. */
 export function MapThumb({ map, className }: { map: GameMap; className?: string }) {
+  const main = map.radar?.layers[0];
   return (
     <svg viewBox="-4 -4 108 108" className={cn('pointer-events-none', className)} aria-hidden>
+      {main ? (
+        <path d={main.path} fillRule="evenodd" fill="rgb(255 255 255 / 0.07)" stroke="rgb(255 255 255 / 0.35)" strokeWidth="0.45" />
+      ) : (
+        map.layout?.zones.map((z) => <circle key={z.id} cx={z.x} cy={z.y} r="1.1" fill="rgb(255 255 255 / 0.28)" />)
+      )}
       <Sites map={map} />
-      {map.layout?.zones.map((z) => (
-        <circle key={z.id} cx={z.x} cy={z.y} r="1.1" fill="rgb(255 255 255 / 0.28)" />
-      ))}
     </svg>
   );
 }
@@ -116,10 +166,10 @@ function UtilityGlyph({ u, active }: { u: Utility; active: boolean }) {
         />
       )}
       {u.type === 'SMOKE' && (
-        <circle cx={x} cy={y} r="4.2" fill="rgb(200 208 218 / 0.28)" stroke={color} strokeWidth={active ? 0.7 : 0.35} />
+        <circle cx={x} cy={y} r="3.4" fill="rgb(200 208 218 / 0.3)" stroke={color} strokeWidth={active ? 0.7 : 0.35} />
       )}
       {u.type === 'MOLOTOV' && (
-        <circle cx={x} cy={y} r="3.4" fill="rgb(240 135 79 / 0.3)" stroke={color} strokeWidth={active ? 0.7 : 0.35} />
+        <circle cx={x} cy={y} r="2.8" fill="rgb(240 135 79 / 0.32)" stroke={color} strokeWidth={active ? 0.7 : 0.35} />
       )}
       {u.type === 'FLASH' && (
         <path
@@ -147,16 +197,14 @@ export function TacticalMap({
   const plan = call.mapPlan;
   const target = plan?.markers.find((m) => m.kind === 'TARGET')?.label ?? (call.site === 'A' || call.site === 'B' ? call.site : undefined);
   const hasLayout = !!map?.layout;
+  const uid = useId().replace(/:/g, '');
+  const layers = map?.radar?.layers ?? [];
 
   return (
     <div className={cn('relative overflow-hidden rounded-[22px] bg-black/30 ring-1 ring-inset ring-white/[0.06]', className)}>
-      <svg
-        viewBox="0 0 100 100"
-        className="block aspect-square w-full"
-        role="img"
-        aria-label={`Mapa esquemático de ${map?.name ?? 'mapa'}`}
-      >
+      <svg viewBox="0 0 100 100" className="block aspect-square w-full" role="img" aria-label={`Radar de ${map?.name ?? 'mapa'}`}>
         <Grid />
+        {map && <Radar map={map} uid={uid} />}
         {map && hasLayout && (
           <>
             <Sites map={map} target={target} />
@@ -186,8 +234,8 @@ export function TacticalMap({
           .filter((m) => m.kind === 'PLAYER')
           .map((m, i) => (
             <motion.g key={m.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.05 + i * 0.03 }}>
-              <circle cx={m.x} cy={m.y} r="2.6" fill="var(--color-ink)" />
-              <text x={m.x} y={m.y + 1.05} textAnchor="middle" fontSize="2.9" fontWeight="800" fill="#0b0d10">
+              <circle cx={m.x} cy={m.y} r="2.2" fill="var(--color-ink)" stroke="#121519" strokeWidth="0.4" />
+              <text x={m.x} y={m.y + 0.95} textAnchor="middle" fontSize="2.6" fontWeight="800" fill="#0b0d10">
                 {m.label}
               </text>
             </motion.g>
@@ -195,8 +243,18 @@ export function TacticalMap({
       </svg>
       {!hasLayout && <div className="absolute inset-0 grid place-items-center text-sm text-faint">Mapa visual em breve</div>}
       <div className="pointer-events-none absolute left-3 top-3 rounded-full bg-black/50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-faint backdrop-blur">
-        Esquemático
+        {layers.length ? 'Radar Call CS' : 'Esquemático'}
       </div>
+      {layers.length > 1 && (
+        <div className="pointer-events-none absolute bottom-3 left-3 flex gap-3 rounded-full bg-black/50 px-3 py-1 text-[10px] font-semibold text-muted backdrop-blur">
+          <span>━ {layers[0].label}</span>
+          {layers.slice(1).map((l) => (
+            <span key={l.id} className="text-accent">
+              ┅ {l.label}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -66,6 +66,8 @@ Copie `.env.example` para `.env`:
 **Cenário principal testado:** Mirage → TR → Full Buy → 5 jogadores → a primeira call é
 "Split A — 2 rampa, 1 palácio, 2 meio. Smoke jungle e CT. Entramos juntos na flash."
 
+**Radares:** os 7 mapas têm radar vetorial redesenhado na identidade Call CS (`src/services/mock/data/radars.ts`), usado nos cards de mapa e no mapa tático do detalhe da call.
+
 **Atalhos (desktop / segundo monitor, Modo Partida):** `T`/`C` lado · `1`–`4` economia ·
 `R` "Me dá uma call" · `F` alterna favoritas · `Esc` fecha o detalhe.
 

@@ -27,3 +27,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## Radares dos mapas
+
+Os contornos em `src/services/mock/data/radars.ts` foram traçados a partir dos overviews oficiais
+do Counter-Strike 2 e redesenhados como vetores na identidade visual do Call CS
+(nenhuma imagem da Valve é distribuída). Counter-Strike, CS2 e os nomes dos mapas são marcas da
+Valve Corporation. O Call CS não é afiliado nem endossado pela Valve.
